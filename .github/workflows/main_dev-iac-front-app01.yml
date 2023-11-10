@@ -32,10 +32,7 @@ jobs:
         run: dotnet tool install -g dotnet-ef
       
       - name: dotnet publish
-        run: dotnet ef migrations add CreateMigrations --project DotNetCoreSqlDb/DotNetCoreSqlDb.csproj
-
-      - name: dotnet publish
-        run: dotnet ef database update
+        run: dotnet ef migrations add AddMigrations --project DotNetCoreSqlDb/DotNetCoreSqlDb.csproj
 
       - name: Apply EF Core Migrations
         run: dotnet ef database update --project DotNetCoreSqlDb/DotNetCoreSqlDb.csproj
