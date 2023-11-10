@@ -32,13 +32,13 @@ jobs:
         run: dotnet tool install -g dotnet-ef
       
       - name: dotnet publish
-        run: dotnet ef migrations add AddMigrations --project DotNetCoreSqlDb/DotNetCoreSqlDb.csproj
+        run: dotnet ef migrations add AddInitialMigrations --project DotNetCoreSqlDb/DotNetCoreSqlDb.csproj
+
+      - name: Generate EF Core Migration Script
+        run: dotnet ef migrations script --output ${{env.DOTNET_ROOT}}/myapp/migrate/Script.sql --project DotNetCoreSqlDb/DotNetCoreSqlDb.csproj
 
       - name: Apply EF Core Migrations
         run: dotnet ef database update --project DotNetCoreSqlDb/DotNetCoreSqlDb.csproj
-
-      - name: dotnet publish
-        run: dotnet ef migrations bundle --runtime win-x64 -p DotNetCoreSqlDb/DotNetCoreSqlDb.csproj -o ${{env.DOTNET_ROOT}}/myapp/migrate
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
